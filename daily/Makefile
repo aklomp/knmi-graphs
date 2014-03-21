@@ -1,7 +1,17 @@
 YEARS = $(shell seq 1951 $(shell date -d '-1 year' '+%Y'))
 PNGS = $(addprefix year-, $(addsuffix .png, ${YEARS}))
 
-all: $(PNGS)
+.PHONY: all clean
+
+all: \
+  $(PNGS) \
+  yearblock.png
+
+yearblock.png: yearblock.svg
+	rsvg-convert "$<" -f png -o "$@"
+
+yearblock.svg: yearblock.xsl etmgeg_210.xml
+	xsltproc $* $^ | xmllint --format /dev/stdin > "$@"
 
 year-%.png: year-%.svg
 	rsvg-convert "$<" -f png -o "$@"
@@ -21,4 +31,4 @@ etmgeg_210.zip:
 	touch "$@"
 
 clean:
-	rm etmgeg_210.txt etmgeg_210.xml year-*.svg year-*.png
+	rm -f etmgeg_210.txt etmgeg_210.xml year-*.svg year-*.png
