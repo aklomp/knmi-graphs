@@ -1,7 +1,9 @@
 #out.pdf: out.fo
 #	/home/alfred/bin/fop-1.0/fop -fo out.fo -pdf out.pdf
 
-all: \
+.PHONY: all clean
+
+IMGS = \
   year-2001.png \
   year-2002.png \
   year-2003.png \
@@ -12,6 +14,8 @@ all: \
   year-2008.png \
   year-2009.png \
   year-2010.png
+
+all: $(IMGS)
 
 year-%.png: year-%.svg
 	rsvg-convert "$<" -f png -o "$@"
@@ -29,3 +33,6 @@ uurgeg_210_2001-2010.txt: uurgeg_210_2001-2010.zip
 uurgeg_210_2001-2010.zip:
 	wget -O "$@" "http://www.knmi.nl/klimatologie/uurgegevens/datafiles/210/uurgeg_210_2001-2010.zip"
 	touch "$@"
+
+clean:
+	rm -f $(IMGS)
