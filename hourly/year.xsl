@@ -58,6 +58,9 @@
 				</xsl:for-each>
 			</xsl:attribute>
 		</svg:polyline>
+		<svg:text style="fill:white;stroke:none;font-size:11px;font-family:sans-serif" x="4" y="13">
+			<xsl:value-of select="@year"/>
+		</svg:text>
 	</xsl:template>
 
 </xsl:stylesheet>
