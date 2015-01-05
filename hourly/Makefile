@@ -1,23 +1,14 @@
-#out.pdf: out.fo
-#	/home/alfred/bin/fop-1.0/fop -fo out.fo -pdf out.pdf
+YEARS = $(shell seq 2001 2010)
+IMGS = $(addprefix png/year-, $(addsuffix .png, $(YEARS)))
 
 .PHONY: all clean
 
-IMGS = \
-  year-2001.png \
-  year-2002.png \
-  year-2003.png \
-  year-2004.png \
-  year-2005.png \
-  year-2006.png \
-  year-2007.png \
-  year-2008.png \
-  year-2009.png \
-  year-2010.png
-
 all: $(IMGS)
 
-year-%.png: year-%.svg
+png:
+	mkdir png
+
+png/year-%.png: year-%.svg | png
 	rsvg-convert "$<" -f png -o "$@"
 
 year-%.svg: uurgeg_210_2001-2010.xml year.xsl
@@ -35,4 +26,4 @@ uurgeg_210_2001-2010.zip:
 	touch "$@"
 
 clean:
-	rm -f $(IMGS)
+	rm -rf png
