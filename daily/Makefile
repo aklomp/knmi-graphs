@@ -1,5 +1,6 @@
-YEARS = $(shell seq 1951 $(shell date -d '-1 year' '+%Y'))
-PNGS = $(addprefix png/year-, $(addsuffix .png, ${YEARS}))
+URL	:= "http://cdn.knmi.nl/knmi/map/page/klimatologie/gegevens/daggegevens/etmgeg_210.zip"
+YEARS	:= $(shell seq 1951 $(shell date -d '-1 year' '+%Y'))
+PNGS	:= $(addprefix png/year-, $(addsuffix .png, ${YEARS}))
 
 .PHONY: all clean
 
@@ -30,7 +31,7 @@ etmgeg_210.txt: etmgeg_210.zip
 	touch "$@"
 
 etmgeg_210.zip:
-	wget -O "$@" "http://www.knmi.nl/klimatologie/daggegevens/datafiles3/210/etmgeg_210.zip"
+	wget -O "$@" "$(URL)"
 	touch "$@"
 
 clean:
